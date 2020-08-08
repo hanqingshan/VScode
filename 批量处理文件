@@ -1,0 +1,45 @@
+import sys
+import numpy as np
+import os
+import matplotlib.pyplot as plt
+sys.path.append(r"D:\\2020.08.08解析\\multisourcepro\\highspeed\\tools")
+#sys.path.append(r"D:\\2020.08.08解析\\multisourcepro\\highspeed\\tools")
+
+
+#from decoders  import *
+import files
+import decoders
+## 批量读取文件
+# 可实现
+path = "D:\\2020.08.08解析\\multisourcepro\\莒县数据\\修改上称时间后的窄条波形\\Date_2020_08_07"                           # 设置路径
+dirs = os.listdir(path)                    # 获取指定路径下的文件
+
+for i in dirs:                             # 循环读取路径下的文件并筛选输出
+    if os.path.splitext(i)[1] == ".vscw":   # 筛选csv文件
+        print (i)                            # 输出所有的csv文件
+
+        waveData = decoders.res_wavefile(path+'\\'+i)
+        for j in range(0, len(waveData)):
+            y = waveData[j][0:-500]
+            plt.figure(j)
+            plt.plot(y)
+            if j in range(36, 39):
+                plt.savefig('D:\\2020.08.08解析\\multisourcepro\\Sound\\savefig\\ %s_%d.jpg' % (i,j ))
+                plt.clf()
+
+
+
+
+# waveData = decoders.res_wavefile("D:\\2020.08.08解析\\multisourcepro\\莒县数据\\修改上称时间后的窄条波形\\Date_2020_08_07\\WJ_VOICE_2020_08_07_20_28_16_449_2.vscw")
+
+## 已完成波形解析
+'''
+for i in range(0,len(waveData)):
+    y = waveData[i][0:5000]
+    plt.figure(i)
+    plt.plot(y)
+    if i in range(36,39):
+        plt.savefig('D:\\2020.08.08解析\\multisourcepro\\Sound\\savefig\\ %d.jpg' %(i+10))
+
+
+'''
